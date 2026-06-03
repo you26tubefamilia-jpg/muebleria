@@ -18,7 +18,7 @@
                     <label for="imagen">Imagen</label>
                     @if($categoria->imagen)
                         <div style="margin-bottom:8px">
-                            <img src="{{ asset('storage/' . $categoria->imagen) }}" alt="" style="max-height:80px;border-radius:8px">
+                            <img src="{{ $categoria->imagen_url }}" alt="" style="max-height:80px;border-radius:8px">
                         </div>
                     @endif
                     <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">

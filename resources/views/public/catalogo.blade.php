@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Muebles — Mueblería Panamá</title>
+    <title>Catálogo de Muebles — Muebles Panamá</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -38,21 +38,13 @@
     <nav class="nav scrolled" id="navbar">
         <div class="nav-brand">
             <div class="nav-logo"><i class="fas fa-couch"></i></div>
-            Mueblería Panamá
+            Muebles Panamá
         </div>
         <div class="nav-links">
             <a href="{{ route('inicio') }}">Inicio</a>
             <a href="{{ route('catalogo') }}" class="active">Catálogo Completo</a>
         </div>
         <div class="nav-actions">
-            @php $cartCount = count(session()->get('cart', [])); @endphp
-            <a href="{{ route('carrito') }}" style="position:relative;">
-                <i class="fas fa-shopping-cart"></i>
-                @if($cartCount > 0)
-                    <span style="position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:10px; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; font-weight:bold;">{{ $cartCount }}</span>
-                @endif
-            </a>
-            
             @guest
                 <a href="{{ route('login') }}" class="active"><i class="fas fa-user"></i> <span class="action-text">Iniciar Sesión</span></a>
             @else
@@ -102,7 +94,7 @@
                     <div class="prod-card">
                         <div class="img-wrap">
                             @if($prod->imagen_principal)
-                            <img src="{{ asset('storage/' . $prod->imagen_principal) }}" alt="{{ $prod->nombre }}">
+                            <img src="{{ $prod->imagen_url }}" alt="{{ $prod->nombre }}">
                             @endif
                             @if($prod->precio_oferta)
                                 <div class="prod-badge badge-sale">Oferta Especial</div>
@@ -118,10 +110,7 @@
                                         <span class="prod-price-old">${{ number_format($prod->precio, 2) }}</span>
                                     @endif
                                 </div>
-                                <form action="{{ route('carrito.add', $prod->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="prod-btn" title="Añadir al carrito"><i class="fas fa-cart-plus"></i></button>
-                                </form>
+                                <a href="https://wa.me/50760000000?text={{ urlencode('Hola, me interesa el producto ' . $prod->nombre . ' (ID: ' . $prod->id . '). Quisiera realizar la compra.') }}" target="_blank" class="prod-btn" style="background-color:#25D366; color:white; border:none;" title="Comprar por WhatsApp"><i class="fab fa-whatsapp"></i></a>
                             </div>
                         </div>
                     </div>
@@ -145,7 +134,7 @@
     {{-- FOOTER --}}
     <footer class="footer">
         <div class="footer-bar">
-            <span>&copy; {{ date('Y') }} Mueblería Panamá. Todos los derechos reservados.</span>
+            <span>&copy; {{ date('Y') }} Muebles Panamá. Todos los derechos reservados.</span>
             <span>Orgullosamente Panameños <i class="fas fa-flag" style="color:var(--accent);margin-left:4px"></i></span>
         </div>
     </footer>

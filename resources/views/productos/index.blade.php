@@ -40,7 +40,7 @@
                             <td>
                                 <div style="display:flex;align-items:center;gap:10px">
                                     @if($prod->imagen_principal)
-                                        <img src="{{ asset('storage/' . $prod->imagen_principal) }}" alt="" style="width:40px;height:40px;border-radius:8px;object-fit:cover">
+                                        <img src="{{ $prod->imagen_url }}" alt="" style="width:40px;height:40px;border-radius:8px;object-fit:cover">
                                     @else
                                         <div style="width:40px;height:40px;border-radius:8px;background:var(--bg-hover);display:flex;align-items:center;justify-content:center;color:var(--text-muted)"><i class="fas fa-image"></i></div>
                                     @endif

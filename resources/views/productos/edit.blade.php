@@ -81,7 +81,7 @@
                     <label for="imagen_principal">Imagen Principal</label>
                     @if($producto->imagen_principal)
                         <div style="margin-bottom:8px">
-                            <img src="{{ asset('storage/' . $producto->imagen_principal) }}" alt="" style="max-height:100px;border-radius:8px">
+                            <img src="{{ $producto->imagen_url }}" alt="" style="max-height:100px;border-radius:8px">
                         </div>
                     @endif
                     <input type="file" name="imagen_principal" id="imagen_principal" class="form-control" accept="image/*">

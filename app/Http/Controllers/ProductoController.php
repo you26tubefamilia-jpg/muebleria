@@ -81,7 +81,12 @@ class ProductoController extends Controller
         $validated['activo'] = $request->has('activo');
 
         if ($request->hasFile('imagen_principal')) {
-            $validated['imagen_principal'] = $request->file('imagen_principal')->store('productos', 'public');
+            try {
+                $baserow = new \App\Services\BaserowService();
+                $validated['imagen_principal'] = $baserow->uploadFile($request->file('imagen_principal'));
+            } catch (\Exception $e) {
+                return back()->withErrors(['imagen_principal' => $e->getMessage()])->withInput();
+            }
         }
 
         Producto::create($validated);
@@ -138,10 +143,15 @@ class ProductoController extends Controller
         $validated['activo'] = $request->has('activo');
 
         if ($request->hasFile('imagen_principal')) {
-            if ($producto->imagen_principal) {
+            if ($producto->imagen_principal && !\Illuminate\Support\Str::startsWith($producto->imagen_principal, ['http://', 'https://'])) {
                 Storage::disk('public')->delete($producto->imagen_principal);
             }
-            $validated['imagen_principal'] = $request->file('imagen_principal')->store('productos', 'public');
+            try {
+                $baserow = new \App\Services\BaserowService();
+                $validated['imagen_principal'] = $baserow->uploadFile($request->file('imagen_principal'));
+            } catch (\Exception $e) {
+                return back()->withErrors(['imagen_principal' => $e->getMessage()])->withInput();
+            }
         }
 
         $producto->update($validated);
@@ -155,7 +165,7 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        if ($producto->imagen_principal) {
+        if ($producto->imagen_principal && !\Illuminate\Support\Str::startsWith($producto->imagen_principal, ['http://', 'https://'])) {
             Storage::disk('public')->delete($producto->imagen_principal);
         }
 

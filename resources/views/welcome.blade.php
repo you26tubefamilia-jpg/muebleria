@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mueblería Panamá — Estilo y Tradición</title>
+    <title>Muebles Panamá — Estilo y Tradición</title>
     <meta name="description" content="Muebles de calidad en Panamá. Encuentra recámaras, comedores y salas con los mejores acabados y diseño premium.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,23 +17,14 @@
     <nav class="nav" id="navbar">
         <div class="nav-brand">
             <div class="nav-logo"><i class="fas fa-gem"></i></div>
-            Mueblería Panamá
+            Muebles Panamá
         </div>
         <div class="nav-links">
             <a href="{{ route('inicio') }}" class="active">Inicio</a>
             <a href="{{ route('catalogo') }}">Colección</a>
             <a href="#destacados">Destacados</a>
-            <a href="#juego">Privilegios</a>
         </div>
         <div class="nav-actions">
-            @php $cartCount = count(session()->get('cart', [])); @endphp
-            <a href="{{ route('carrito') }}" style="position:relative;" aria-label="Carrito">
-                <i class="fas fa-shopping-bag"></i>
-                @if($cartCount > 0)
-                    <span style="position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:10px; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; font-weight:bold;">{{ $cartCount }}</span>
-                @endif
-            </a>
-            
             @guest
                 <a href="{{ route('login') }}" class="active" aria-label="Iniciar Sesión"><i class="fas fa-user"></i> <span class="action-text"></span></a>
             @else
@@ -63,7 +54,7 @@
             @if($showcase && $showcase->imagen_principal)
             <div class="hero-visual">
                 <div class="hero-img-wrap">
-                    <img src="{{ asset('storage/' . $showcase->imagen_principal) }}" alt="{{ $showcase->nombre }}">
+                    <img src="{{ $showcase->imagen_url }}" alt="{{ $showcase->nombre }}">
                 </div>
             </div>
             @endif
@@ -104,7 +95,7 @@
             <div class="prod-card">
                 <div class="img-wrap">
                     @if($prod->imagen_principal)
-                    <img src="{{ asset('storage/' . $prod->imagen_principal) }}" alt="{{ $prod->nombre }}">
+                    <img src="{{ $prod->imagen_url }}" alt="{{ $prod->nombre }}">
                     @endif
                     <div class="prod-badge badge-star">Premium</div>
                 </div>
@@ -116,7 +107,7 @@
                             <span class="prod-price-label">Precio Exclusivo</span>
                             ${{ number_format($prod->precio_final, 2) }}
                         </div>
-                        <a href="{{ route('catalogo') }}" class="prod-btn"><i class="fas fa-arrow-right"></i></a>
+                        <a href="https://wa.me/50760000000?text={{ urlencode('Hola, me interesa el producto ' . $prod->nombre . ' (ID: ' . $prod->id . '). Quisiera realizar la compra.') }}" target="_blank" class="prod-btn" style="background-color:#25D366; color:white; border:none;" title="Comprar por WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -124,26 +115,6 @@
         </div>
     </section>
 
-    {{-- JUEGO: RULETA --}}
-    <section class="game-section reveal" id="juego">
-        <div class="game-box">
-            <div class="game-info">
-                <h3><i class="fas fa-ticket-alt"></i> Beneficios VIP</h3>
-                <p>Experimente el privilegio de pertenecer a nuestro círculo exclusivo. Gire para revelar su beneficio de cortesía en su próxima adquisición.</p>
-                <div class="game-result" id="gameResult">Aguardando...</div>
-            </div>
-            <div class="roulette-container">
-                <div class="roulette-pointer"></div>
-                <button class="roulette-btn" id="spinBtn">GIRAR</button>
-                <div class="roulette-wheel" id="wheel">
-                    <div class="slice slice-1"><span>10% OFF</span></div>
-                    <div class="slice slice-2"><span>Envío VIP</span></div>
-                    <div class="slice slice-3"><span>5% OFF</span></div>
-                    <div class="slice slice-4"><span>Cortesía</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     {{-- FEATURES PANAMA --}}
     <div class="features reveal">
@@ -174,7 +145,7 @@
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <h3><i class="fas fa-gem"></i> Mueblería Panamá</h3>
+                <h3><i class="fas fa-gem"></i> Muebles Panamá</h3>
                 <p>Elevando el estándar del diseño de interiores en Panamá. Más de una década creando espacios que inspiran y perduran.</p>
                 <div class="footer-socials">
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -187,7 +158,6 @@
                 <a href="{{ route('inicio') }}">Inicio</a>
                 <a href="{{ route('catalogo') }}">Colección</a>
                 <a href="#destacados">Destacados</a>
-                <a href="#juego">Privilegios VIP</a>
             </div>
             <div class="footer-col">
                 <h4>Atención Exclusiva</h4>
@@ -198,7 +168,7 @@
             </div>
         </div>
         <div class="footer-bar">
-            <span>&copy; {{ date('Y') }} Mueblería Panamá. Excelencia en Diseño.</span>
+            <span>&copy; {{ date('Y') }} Muebles Panamá. Excelencia en Diseño.</span>
             <span>Hecho con distinción en Panamá</span>
         </div>
     </footer>
@@ -214,48 +184,6 @@
     }, {threshold:.1, rootMargin:'0px 0px -30px 0px'});
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Roulette Game Logic
-    const wheel = document.getElementById('wheel');
-    const spinBtn = document.getElementById('spinBtn');
-    const resultText = document.getElementById('gameResult');
-    let currentRotation = 0;
-    let isSpinning = false;
-    
-    const prizes = [
-        { name: "Beneficio VIP: 10% OFF (Código: LUX10)", degree: 0 },
-        { name: "Beneficio VIP: Envío Premium (Código: FREELUX)", degree: 90 },
-        { name: "Beneficio VIP: 5% OFF (Código: LUX5)", degree: 180 },
-        { name: "Beneficio VIP: Regalo de Cortesía (Código: LUXGIFT)", degree: 270 }
-    ];
-
-    spinBtn.addEventListener('click', () => {
-        if(isSpinning) return;
-        isSpinning = true;
-        resultText.innerText = "Revelando su beneficio...";
-        
-        // Random spin between 5 to 10 full rotations
-        const spins = Math.floor(Math.random() * 5) + 5;
-        const randomDegree = Math.floor(Math.random() * 360);
-        const totalDegree = (spins * 360) + randomDegree;
-        
-        currentRotation += totalDegree;
-        wheel.style.transform = `rotate(${currentRotation}deg)`;
-        
-        setTimeout(() => {
-            isSpinning = false;
-            const actualDeg = currentRotation % 360;
-            let index = 0;
-            if(actualDeg >= 0 && actualDeg < 90) index = 3;
-            else if(actualDeg >= 90 && actualDeg < 180) index = 2;
-            else if(actualDeg >= 180 && actualDeg < 270) index = 1;
-            else index = 0;
-
-            resultText.innerText = prizes[index].name;
-            
-            setTimeout(() => { resultText.style.transform = "scale(1.05)"; }, 100);
-            setTimeout(() => { resultText.style.transform = "scale(1)"; }, 300);
-        }, 4000); // Wait 4 seconds for the longer spin CSS transition
-    });
     </script>
 </body>
 </html>

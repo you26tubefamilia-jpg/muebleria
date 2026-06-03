@@ -137,4 +137,20 @@ class Producto extends Model
         }
         return (int) round((($this->precio - $this->precio_oferta) / $this->precio) * 100);
     }
+
+    /**
+     * Obtener la URL de la imagen principal (soporta URLs externas como Baserow).
+     */
+    public function getImagenUrlAttribute(): string
+    {
+        if (empty($this->imagen_principal)) {
+            return asset('images/placeholder.jpg'); // Ajusta a una imagen por defecto si existe
+        }
+        
+        if (Str::startsWith($this->imagen_principal, ['http://', 'https://'])) {
+            return $this->imagen_principal;
+        }
+
+        return asset('storage/' . $this->imagen_principal);
+    }
 }

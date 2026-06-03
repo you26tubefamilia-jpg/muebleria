@@ -35,4 +35,20 @@ class Categoria extends Model
     {
         return $query->where('activo', true);
     }
+
+    /**
+     * Obtener la URL de la imagen (soporta URLs externas como Baserow).
+     */
+    public function getImagenUrlAttribute(): string
+    {
+        if (empty($this->imagen)) {
+            return asset('images/placeholder.jpg'); // Ajusta a una imagen por defecto si existe
+        }
+        
+        if (\Illuminate\Support\Str::startsWith($this->imagen, ['http://', 'https://'])) {
+            return $this->imagen;
+        }
+
+        return asset('storage/' . $this->imagen);
+    }
 }

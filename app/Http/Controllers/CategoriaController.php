@@ -38,7 +38,12 @@ class CategoriaController extends Controller
         ]);
 
         if ($request->hasFile('imagen')) {
-            $validated['imagen'] = $request->file('imagen')->store('categorias', 'public');
+            try {
+                $baserow = new \App\Services\BaserowService();
+                $validated['imagen'] = $baserow->uploadFile($request->file('imagen'));
+            } catch (\Exception $e) {
+                return back()->withErrors(['imagen' => $e->getMessage()])->withInput();
+            }
         }
 
         $validated['activo'] = $request->has('activo');
@@ -71,10 +76,15 @@ class CategoriaController extends Controller
 
         if ($request->hasFile('imagen')) {
             // Eliminar imagen anterior
-            if ($categoria->imagen) {
+            if ($categoria->imagen && !\Illuminate\Support\Str::startsWith($categoria->imagen, ['http://', 'https://'])) {
                 Storage::disk('public')->delete($categoria->imagen);
             }
-            $validated['imagen'] = $request->file('imagen')->store('categorias', 'public');
+            try {
+                $baserow = new \App\Services\BaserowService();
+                $validated['imagen'] = $baserow->uploadFile($request->file('imagen'));
+            } catch (\Exception $e) {
+                return back()->withErrors(['imagen' => $e->getMessage()])->withInput();
+            }
         }
 
         $validated['activo'] = $request->has('activo');
@@ -90,7 +100,7 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        if ($categoria->imagen) {
+        if ($categoria->imagen && !\Illuminate\Support\Str::startsWith($categoria->imagen, ['http://', 'https://'])) {
             Storage::disk('public')->delete($categoria->imagen);
         }
 

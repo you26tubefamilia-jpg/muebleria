@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Carrito — Mueblería Panamá</title>
+    <title>Tu Carrito — Muebles Panamá</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -42,7 +42,7 @@
 <body>
 
     <nav class="nav scrolled" id="navbar">
-        <div class="nav-brand"><div class="nav-logo"><i class="fas fa-couch"></i></div> Mueblería Panamá</div>
+        <div class="nav-brand"><div class="nav-logo"><i class="fas fa-couch"></i></div> Muebles Panamá</div>
         <div class="nav-links">
             <a href="{{ route('inicio') }}">Inicio</a>
             <a href="{{ route('catalogo') }}">Catálogo Completo</a>
@@ -74,7 +74,7 @@
                 @foreach($cart as $index => $item)
                 <div class="cart-item">
                     @if(isset($item['imagen']))
-                        <img src="{{ asset('storage/' . $item['imagen']) }}" alt="{{ $item['nombre'] }}" class="cart-img">
+                        <img src="{{ \Illuminate\Support\Str::startsWith($item['imagen'], ['http://', 'https://']) ? $item['imagen'] : asset('storage/' . $item['imagen']) }}" alt="{{ $item['nombre'] }}" class="cart-img">
                     @else
                         <div class="cart-img" style="display:flex;align-items:center;justify-content:center;color:#ccc;"><i class="fas fa-image" style="font-size:30px;"></i></div>
                     @endif

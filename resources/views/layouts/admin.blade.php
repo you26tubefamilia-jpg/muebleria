@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Panel') — Mueblería</title>
+    <title>@yield('title', 'Panel') — Muebles Panamá</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -325,7 +325,7 @@
         <div class="sidebar-brand">
             <div class="brand-icon"><i class="fas fa-couch"></i></div>
             <div>
-                <h2>Mueblería</h2>
+                <h2>Muebles Panamá</h2>
                 <small>Panel de Administración</small>
             </div>
             <button class="sidebar-close" style="display:none;" onclick="toggleSidebar()">

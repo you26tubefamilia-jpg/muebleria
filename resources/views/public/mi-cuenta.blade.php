@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Cuenta — Mueblería Panamá</title>
+    <title>Mi Cuenta — Muebles Panamá</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -42,13 +42,12 @@
 <body>
 
     <nav class="nav scrolled" id="navbar">
-        <div class="nav-brand"><div class="nav-logo"><i class="fas fa-couch"></i></div> Mueblería Panamá</div>
+        <div class="nav-brand"><div class="nav-logo"><i class="fas fa-couch"></i></div> Muebles Panamá</div>
         <div class="nav-links">
             <a href="{{ route('inicio') }}">Inicio</a>
             <a href="{{ route('catalogo') }}">Catálogo Completo</a>
         </div>
         <div class="nav-actions">
-            <a href="{{ route('carrito') }}" style="position:relative;"><i class="fas fa-shopping-cart"></i></a>
             <a href="{{ route('mi-cuenta') }}" class="active"><i class="fas fa-user"></i> <span class="action-text">Mi Cuenta</span></a>
         </div>
     </nav>

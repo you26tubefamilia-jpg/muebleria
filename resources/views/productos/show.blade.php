@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-body" style="text-align:center">
                 @if($producto->imagen_principal)
-                    <img src="{{ asset('storage/' . $producto->imagen_principal) }}" alt="{{ $producto->nombre }}" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px">
+                    <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombre }}" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px">
                 @else
                     <div style="width:100%;height:250px;background:var(--bg-hover);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted)">
                         <i class="fas fa-image" style="font-size:48px"></i>

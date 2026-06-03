@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Mueblería Panamá — Acceso</title>
+    <title>Muebles Panamá — Acceso</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -195,14 +195,14 @@
                 <p>Accede a tu cuenta para darle seguimiento a tus pedidos, guardar tus favoritos y realizar compras seguras.</p>
             </div>
             <div>
-                <small>&copy; {{ date('Y') }} Mueblería Panamá. Orgullosamente panameños.</small>
+                <small>&copy; {{ date('Y') }} Muebles Panamá. Orgullosamente panameños.</small>
             </div>
         </div>
         
         <!-- Form Side -->
         <div class="auth-form-container">
             <a href="{{ route('inicio') }}" class="auth-logo">
-                <i class="fas fa-couch"></i> Mueblería Panamá
+                <i class="fas fa-couch"></i> Muebles Panamá
             </a>
             
             {{ $slot }}
